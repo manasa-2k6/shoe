@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STRYDE | Every step, elevated.</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        /* CSS Variables */
+        :root {
+            /* Colors */
+            --bg-color: #0c0c0c;
+            --surface-color: #161616;
+            --surface-color-lighter: #222222;
+            --accent-color: #D4AF37; /* Gold */
+            --accent-hover: #F3E5AB;
+            --text-primary: #ffffff;
+            --text-secondary: #a3a3a3;
+            
+            /* Typography */
+            --font-display: 'Playfair Display', serif;
+            --font-body: 'Inter', sans-serif;
+            
+            /* Spacing */
+            --spacing-sm: 1rem;
+            --spacing-md: 2rem;
+            --spacing-lg: 4rem;
+            --spacing-xl: 6rem;
+            
+            /* Layout */
+            --nav-height: 80px;
+            --transition-smooth: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-display);
+            font-weight: 600;
+            letter-spacing: 1px;
+            line-height: 1.2;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--text-primary);
+            transition: var(--transition-smooth);
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        /* Generalized Typography */
+        .section-title {
+            font-size: 2.8rem;
+            text-align: center;
+            margin-bottom: var(--spacing-lg);
+            color: var(--text-primary);
+        }
+        
+        .section-title span {
+            color: var(--accent-color);
+            font-style: italic;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem 2.5rem;
+            font-family: var(--font-body);
+            font-weight: 500;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            font-size: 0.85rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background-color: var(--accent-color);
+            color: var(--bg-color);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--text-primary);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--accent-color);
+            color: var(--bg-color);
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: var(--nav-height);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 5%;
+            z-index: 1000;
+            transition: var(--transition-smooth);
+            background: rgba(12, 12, 12, 0);
+        }
+
+        .navbar.scrolled {
+            background: rgba(12, 12, 12, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            height: 70px;
+        }
+
+        .logo {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: 4px;
+            color: var(--text-primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links li a {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            padding-bottom: 5px;
+            color: var(--text-secondary);
+        }
+        
+        .nav-links li a:hover {
+            color: var(--text-primary);
+        }
+
+        .nav-links li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--accent-color);
+            transition: var(--transition-smooth);
+        }
+
+        .nav-links li a:hover::after {
+            width: 100%;
+        }
+
+        /* Hamburger Icon */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.8rem;
+        }
+
+        /* Section Layout */
+        section {
+            padding: var(--spacing-xl) 5%;
+        }
+
+        /* Hero Section with Mesh Gradient */
+        #hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            background-color: #050505;
+            background-image: 
+                radial-gradient(at 20% 30%, hsla(43, 66%, 53%, 0.15) 0px, transparent 50%),
+                radial-gradient(at 80% 10%, hsla(0, 0%, 10%, 1) 0px, transparent 50%),
+                radial-gradient(at 10% 80%, hsla(0, 0%, 15%, 0.5) 0px, transparent 50%),
+                radial-gradient(at 80% 80%, hsla(43, 66%, 53%, 0.1) 0px, transparent 50%),
+                radial-gradient(at 50% 50%, hsla(0, 0%, 5%, 1) 0px, transparent 100%);
+            padding-top: var(--nav-height);
+        }
+
+        #hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(12,12,12,0.1) 0%, rgba(12,12,12,0.9) 100%);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+        }
+
+        .hero-title {
+            font-size: 5.5rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .hero-tagline {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            font-weight: 300;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* Featured Collection */
+        .collection-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+            margin-top: var(--spacing-lg);
+        }
+
+        .product-card {
+            background-color: var(--surface-color);
+            border-radius: 4px;
+            overflow: hidden;
+            transition: var(--transition-smooth);
+            border: 1px solid rgba(255,255,255,0.03);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6), 0 0 30px rgba(212, 175, 55, 0.05);
+            border-color: rgba(212, 175, 55, 0.2);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 400px;
+            background-color: var(--surface-color-lighter);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .product-image span {
+            font-family: var(--font-display);
+            color: rgba(255,255,255,0.15);
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            font-style: italic;
+        }
+
+        /* Gradient placeholders */
+        .card-1 .product-image { background: linear-gradient(135deg, #181818, #222); }
+        .card-2 .product-image { background: linear-gradient(135deg, #151515, #262626); }
+        .card-3 .product-image { background: linear-gradient(135deg, #111, #1e1e1e); }
+
+        .product-info {
+            padding: 2.5rem;
+            text-align: center;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-name {
+            font-size: 1.8rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .product-desc {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+
+        .product-price {
+            color: var(--accent-color);
+            font-size: 1.3rem;
+            font-weight: 500;
+            margin-bottom: 2rem;
+            letter-spacing: 1px;
+        }
+
+        /* About / Story Section */
+        #about {
+            background-color: var(--surface-color);
+            position: relative;
+        }
+
+        .about-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: center;
+        }
+
+        .about-text h2 {
+            font-size: 3.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .about-text h2 span {
+            color: var(--accent-color);
+            font-style: italic;
+        }
+
+        .about-text p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+            font-weight: 300;
+        }
+
+        .about-image {
+            width: 100%;
+            height: 600px;
+            background-color: var(--surface-color-lighter);
+            position: relative;
+            background: linear-gradient(to bottom right, #0a0a0a, #1a1a1a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .about-image::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            width: 100%;
+            height: 100%;
+            border: 1px solid var(--accent-color);
+            z-index: 0;
+            opacity: 0.5;
+            transition: var(--transition-smooth);
+        }
+        
+        .about-container:hover .about-image::before {
+            top: -10px;
+            right: -10px;
+            opacity: 1;
+        }
+        
+        .about-image span {
+            font-family: var(--font-display);
+            color: rgba(255,255,255,0.1);
+            font-size: 2rem;
+            letter-spacing: 4px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Testimonials */
+        #testimonials {
+            background-color: var(--bg-color);
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+            margin-top: var(--spacing-md);
+        }
+
+        .testimonial-card {
+            background-color: var(--surface-color);
+            padding: 3rem 2.5rem;
+            border-radius: 4px;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            transition: var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .testimonial-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--accent-color);
+            transform: scaleX(0);
+            transform-origin: center;
+            transition: var(--transition-smooth);
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            background-color: #1a1a1a;
+        }
+        
+        .testimonial-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .stars {
+            color: var(--accent-color);
+            font-size: 1.4rem;
+            margin-bottom: 1.5rem;
+            letter-spacing: 2px;
+        }
+
+        .quote {
+            font-style: italic;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-size: 1.05rem;
+            line-height: 1.8;
+        }
+
+        .customer-name {
+            font-family: var(--font-body);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-size: 0.9rem;
+            color: var(--text-primary);
+        }
+
+        /* Newsletter */
+        #newsletter {
+            text-align: center;
+            background-color: var(--surface-color);
+            border-top: 1px solid rgba(255,255,255,0.03);
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+            padding: 8rem 5%;
+        }
+
+        .newsletter-wrapper {
+            max-width: 650px;
+            margin: 0 auto;
+        }
+        
+        .newsletter-wrapper .section-title {
+            margin-bottom: 1rem;
+        }
+
+        .newsletter-wrapper p {
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 0;
+        }
+
+        .newsletter-input {
+            flex: 1;
+            padding: 1.2rem 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--bg-color);
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            font-size: 1rem;
+            transition: var(--transition-smooth);
+        }
+
+        .newsletter-input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: inset 0 0 10px rgba(212, 175, 55, 0.1);
+        }
+        
+        .newsletter-form .btn {
+            padding: 1.2rem 3rem;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--bg-color);
+            padding: var(--spacing-lg) 5% 3rem;
+            text-align: center;
+        }
+
+        .footer-logo {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: 5px;
+            margin-bottom: 2rem;
+            display: inline-block;
+            color: var(--text-primary);
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            list-style: none;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .social-icons a {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 500;
+        }
+
+        .social-icons a:hover {
+            color: var(--accent-color);
+        }
+
+        .copyright {
+            color: #555555;
+            font-size: 0.85rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            padding-top: 3rem;
+            letter-spacing: 1px;
+        }
+
+        /* Scroll Reveal Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.9s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .delay-1 { transition-delay: 0.15s; }
+        .delay-2 { transition-delay: 0.3s; }
+        .delay-3 { transition-delay: 0.45s; }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            :root {
+                --spacing-lg: 3rem;
+                --spacing-xl: 4rem;
+            }
+            .hero-title { font-size: 4.5rem; }
+            .about-container { gap: 3rem; }
+        }
+
+        @media (max-width: 768px) {
+            .hero-title { font-size: 3.5rem; }
+            .hero-tagline { font-size: 1.1rem; letter-spacing: 2px; }
+            .section-title { font-size: 2.2rem; }
+            
+            .navbar { padding: 0 1.5rem; }
+            
+            .hamburger { display: block; z-index: 1001; }
+            
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 100%;
+                height: 100vh;
+                background-color: rgba(12, 12, 12, 0.98);
+                backdrop-filter: blur(15px);
+                -webkit-backdrop-filter: blur(15px);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                transition: 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+                z-index: 1000;
+                gap: 2rem;
+            }
+            
+            .nav-links.nav-active { right: 0; }
+            .nav-links li { margin: 1rem 0; }
+            .nav-links li a { font-size: 1.2rem; }
+            
+            .about-container { grid-template-columns: 1fr; }
+            .about-text { order: 2; text-align: center; }
+            .about-image { order: 1; height: 400px; }
+            .about-image::before { display: none; }
+            
+            .newsletter-form { flex-direction: column; gap: 10px; }
+            .newsletter-form .btn { width: 100%; }
+            .newsletter-input { width: 100%; }
+        }
+        
+        @media (max-width: 480px) {
+            .hero-title { font-size: 2.8rem; }
+            .about-text h2 { font-size: 2.5rem; }
+            .footer-links { gap: 1.5rem; flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <a href="#hero" class="logo">STRYDE</a>
+        <ul class="nav-links" id="nav-links">
+            <li><a href="#hero">Home</a></li>
+            <li><a href="#collection">Collection</a></li>
+            <li><a href="#about">Heritage</a></li>
+            <li><a href="#testimonials">Reviews</a></li>
+        </ul>
+        <button class="hamburger" id="hamburger" aria-label="Toggle Menu">☰</button>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero">
+        <div class="hero-content reveal">
+            <h1 class="hero-title">Step Into Luxury</h1>
+            <p class="hero-tagline">Every step, elevated.</p>
+            <a href="#collection" class="btn btn-primary">Discover the Collection</a>
+        </div>
+    </section>
+
+    <!-- Featured Collection -->
+    <section id="collection">
+        <h2 class="section-title reveal">Curated <span>Elegance</span></h2>
+        <div class="collection-grid">
+            
+            <!-- Product 1 -->
+            <div class="product-card card-1 reveal delay-1">
+                <div class="product-image">
+                    <span>[ Visual Placeholder ]</span>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-name">Urban Pace</h3>
+                    <p class="product-desc">Sleek, aerodynamic lines and highly breathable materials engineered for the modern metropolitan commuter.</p>
+                    <div class="product-price">₹4,999</div>
+                    <button class="btn btn-outline">Add to Cart</button>
+                </div>
+            </div>
+
+            <!-- Product 2 -->
+            <div class="product-card card-2 reveal delay-2">
+                <div class="product-image">
+                    <span>[ Visual Placeholder ]</span>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-name">Apex Runner</h3>
+                    <p class="product-desc">Unrivaled cushioning layered within a lightweight, precision-crafted frame for peak athletic performance.</p>
+                    <div class="product-price">₹6,499</div>
+                    <button class="btn btn-outline">Add to Cart</button>
+                </div>
+            </div>
+
+            <!-- Product 3 -->
+            <div class="product-card card-3 reveal delay-3">
+                <div class="product-image">
+                    <span>[ Visual Placeholder ]</span>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-name">Classic Edge</h3>
+                    <p class="product-desc">A timeless aesthetic refined with premium artisan leather, designed for unparalleled everyday durability.</p>
+                    <div class="product-price">₹3,799</div>
+                    <button class="btn btn-outline">Add to Cart</button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- About / Heritage Section -->
+    <section id="about">
+        <div class="about-container">
+            <div class="about-image reveal delay-1">
+                <span>[ Lifestyle Photography ]</span>
+            </div>
+            <div class="about-text reveal">
+                <h2>The <span>STRYDE</span> Heritage</h2>
+                <p>Born from a relentless passion for uncompromising craftsmanship, STRYDE bridges the elusive gap between high-end fashion and functional performance. We firmly believe that luxury footwear should not merely serve a utilitarian purpose, but make a profound statement about the wearer.</p>
+                <p>Meticulously designed utilizing premium materials and innovative biomechanics, every pair is a living testament to our pursuit of absolute perfection. Step into a world where enduring elegance meets modern endurance.</p>
+                <a href="#collection" class="btn btn-outline" style="margin-top: 1.5rem;">Explore Our Story</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section id="testimonials">
+        <h2 class="section-title reveal">Client <span>Perspectives</span></h2>
+        <div class="testimonials-grid">
+
+            <div class="testimonial-card reveal delay-1">
+                <div class="stars">★★★★★</div>
+                <p class="quote">"The Apex Runners are an absolute revelation. The delicate balance between plush comfort and a stunning luxury aesthetic is something I haven't found in any other premium brand. Truly worth the investment."</p>
+                <h4 class="customer-name">Arjun Mehta</h4>
+            </div>
+
+            <div class="testimonial-card reveal delay-2">
+                <div class="stars">★★★★★</div>
+                <p class="quote">"STRYDE brings genuine luxury to everyday wear. The Classic Edge pairs seamlessly with my tailored work attire as well as my casual weekend outfits. The artisan craftsmanship is visibly flawless."</p>
+                <h4 class="customer-name">Priya Desai</h4>
+            </div>
+
+            <div class="testimonial-card reveal delay-3">
+                <div class="stars">★★★★☆</div>
+                <p class="quote">"I wore the Urban Pace during a week-long international trip, walking miles every day. Not a single moment of discomfort, and I received compliments everywhere I went. A stunning fusion of form and function."</p>
+                <h4 class="customer-name">Rahul Sharma</h4>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section id="newsletter">
+        <div class="newsletter-wrapper reveal">
+            <h2 class="section-title">Join the <span>Inner Circle</span></h2>
+            <p>Subscribe to receive exclusive access to limited edition drops, curated editorial content, and special VIP privileges.</p>
+            <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Welcome to the STRYDE Inner Circle. Thank you for subscribing!');">
+                <input type="email" class="newsletter-input" placeholder="Enter your email address" required aria-label="Email Address">
+                <button type="submit" class="btn btn-primary">Subscribe</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="reveal">
+            <a href="#hero" class="footer-logo">STRYDE</a>
+            <ul class="footer-links">
+                <li><a href="#collection">Shop</a></li>
+                <li><a href="#about">Heritage</a></li>
+                <li><a href="#">Bespoke Services</a></li>
+                <li><a href="#">Shipping & Returns</a></li>
+                <li><a href="#">Care Guide</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+            </ul>
+            <div class="social-icons">
+                <a href="#" aria-label="Instagram">IG</a>
+                <a href="#" aria-label="Twitter">X</a>
+                <a href="#" aria-label="Facebook">FB</a>
+                <a href="#" aria-label="Pinterest">PT</a>
+            </div>
+            <div class="copyright">
+                &copy; <span id="year"></span> STRYDE LUXURY FOOTWEAR. ALL RIGHTS RESERVED.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Update Copyright Year dynamically
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Sticky Navbar Effect on Scroll
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile Hamburger Menu Toggle
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('nav-links');
+        
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('nav-active');
+            // Toggle hamburger icon between ☰ and ✕
+            if (navLinks.classList.contains('nav-active')) {
+                hamburger.textContent = '✕';
+            } else {
+                hamburger.textContent = '☰';
+            }
+        });
+
+        // Close mobile menu when a nav link is clicked
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('nav-active');
+                hamburger.textContent = '☰';
+            });
+        });
+
+        // Scroll Reveal Animation Logic
+        function revealElements() {
+            const reveals = document.querySelectorAll('.reveal');
+            
+            for (let i = 0; i < reveals.length; i++) {
+                const windowHeight = window.innerHeight;
+                const elementTop = reveals[i].getBoundingClientRect().top;
+                const elementVisible = 120; // threshold before element appears
+                
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add('active');
+                }
+            }
+        }
+
+        // Listen for scroll events to trigger animations
+        window.addEventListener('scroll', revealElements);
+        
+        // Trigger once immediately on page load
+        revealElements();
+    </script>
+</body>
+</html>
